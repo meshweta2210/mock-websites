@@ -1,1 +1,1 @@
-web: node server.js
+web: node "website 1/server.js"

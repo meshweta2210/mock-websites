@@ -2,10 +2,10 @@
   "name": "xnc-mock-website",
   "version": "1.0.0",
   "description": "XNC Mock Website - Web Scraping Test Suite",
-  "main": "server.js",
+  "main": "website 1/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "start": "node \"website 1/server.js\"",
+    "dev": "node \"website 1/server.js\""
   },
   "keywords": [
     "xnc",
