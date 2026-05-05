@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About XNC - Company Information</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #fff;
+        }
+
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #003d82;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #003d82;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            padding: 0.5rem 0;
+            top: 100%;
+            left: 0;
+            border-top: 3px solid #003d82;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #2c3e50;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f4f8;
+            color: #003d82;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb {
+            padding: 1.5rem 2rem;
+            color: #666;
+            font-size: 0.95rem;
+            background-color: #f8fafb;
+        }
+
+        .breadcrumb a {
+            color: #003d82;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #003d82 0%, #005ba8 100%);
+            color: white;
+            padding: 60px 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 80px 2rem;
+        }
+
+        .content-section {
+            margin-bottom: 60px;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            color: #003d82;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e0e8f0;
+        }
+
+        .content-section p {
+            color: #555;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: #f8fafb;
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid #003d82;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #003d82;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .team-member-image {
+            height: 200px;
+            background: linear-gradient(135deg, #003d82 0%, #005ba8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .team-member-info {
+            padding: 1.5rem;
+        }
+
+        .team-member-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #003d82;
+            margin-bottom: 0.25rem;
+        }
+
+        .team-member-title {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-member-bio {
+            color: #777;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .press-releases-link {
+            display: inline-block;
+            background-color: #003d82;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .press-releases-link:hover {
+            background-color: #002449;
+        }
+
+        footer {
+            background-color: #1a2332;
+            color: white;
+            padding: 60px 2rem 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">XNC</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Solutions</a>
+                    <div class="dropdown-content">
+                        <a href="/#solutions">Drug Development</a>
+                        <a href="/#solutions">Manufacturing</a>
+                        <a href="/#solutions">Analytical Services</a>
+                        <a href="/#solutions">Regulatory Support</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Company</a>
+                    <div class="dropdown-content">
+                        <a href="/company/overview.html">About XNC</a>
+                        <a href="/company/overview.html">Leadership</a>
+                        <a href="/company/overview.html">Our Story</a>
+                        <a href="/company/press-releases.html">Press Releases</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="/">Home</a> / <a href="/company/overview.html">Company</a> / About XNC
+        </div>
+    </div>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>About XNC</h1>
+            <p>Leading the future of life sciences through innovation, partnership, and scientific excellence</p>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container">
+            <!-- Our Mission -->
+            <div class="content-section">
+                <h2>Our Mission</h2>
+                <p>XNC exists to accelerate the development and commercialization of life-changing therapeutics. We partner with innovative companies to overcome the most complex manufacturing and development challenges in drug development. Through strategic partnerships, cutting-edge facilities, and deep scientific expertise, we transform ideas into reality.</p>
+            </div>
+
+            <!-- Company Stats -->
+            <div class="content-section">
+                <h2>By The Numbers</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Team Members</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Active Partners</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Programs Supported</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Our Story -->
+            <div class="content-section">
+                <h2>Our Story</h2>
+                <p>Founded in 2009, XNC began with a simple vision: to make advanced therapeutic manufacturing accessible to innovative companies of all sizes. What started as a small operation has grown into a global leader in contract development and manufacturing organization (CDMO) services.</p>
+                <p>We've built our reputation on scientific excellence, operational reliability, and a deep commitment to our partners' success. Today, we support over 50 active partners across multiple therapeutic modalities and development stages.</p>
+            </div>
+
+            <!-- Leadership -->
+            <div class="content-section">
+                <h2>Leadership Team</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="team-member-image">👩‍💼</div>
+                        <div class="team-member-info">
+                            <div class="team-member-name">Dr. Sarah Chen</div>
+                            <div class="team-member-title">Chief Executive Officer</div>
+                            <div class="team-member-bio">20+ years in biotech leadership and strategic partnerships</div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-image">👨‍💼</div>
+                        <div class="team-member-info">
+                            <div class="team-member-name">Dr. Michael Torres</div>
+                            <div class="team-member-title">Chief Scientific Officer</div>
+                            <div class="team-member-bio">Former VP at leading pharma company, PhD in Chemical Engineering</div>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="team-member-image">👩‍💼</div>
+                        <div class="team-member-info">
+                            <div class="team-member-name">Jennifer Liu</div>
+                            <div class="team-member-title">Chief Operating Officer</div>
+                            <div class="team-member-bio">Operations excellence leader with manufacturing expertise</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Values -->
+            <div class="content-section">
+                <h2>Our Values</h2>
+                <p><strong>Scientific Excellence:</strong> We maintain the highest standards of scientific rigor and technical expertise in all we do.</p>
+                <p><strong>Partnership:</strong> Your success is our success. We invest deeply in understanding your unique challenges and opportunities.</p>
+                <p><strong>Reliability:</strong> We deliver on our commitments consistently, enabling our partners to focus on innovation.</p>
+                <p><strong>Innovation:</strong> We continuously invest in new technologies and processes to stay at the forefront of our industry.</p>
+            </div>
+
+            <!-- Press Releases CTA -->
+            <div class="content-section">
+                <h2>Latest Updates</h2>
+                <p>Stay informed about XNC's latest partnerships, collaborations, and business developments.</p>
+                <a href="/company/press-releases.html" class="press-releases-link">View All Press Releases →</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="/company/overview.html">About Us</a>
+                <a href="/company/overview.html">Leadership</a>
+                <a href="/company/overview.html">Careers</a>
+                <a href="/company/press-releases.html">Press Releases</a>
+            </div>
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <a href="/#solutions">Drug Development</a>
+                <a href="/#solutions">Manufacturing</a>
+                <a href="/#solutions">Analytics</a>
+                <a href="/#solutions">Regulatory</a>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <a href="#">Case Studies</a>
+                <a href="#">Blog</a>
+                <a href="#">Contact</a>
+                <a href="#">Locations</a>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">Compliance</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 XNC. All rights reserved. | Advanced Life Sciences Solutions</p>
+        </div>
+    </footer>
+</body>
+</html>

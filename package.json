@@ -1,0 +1,27 @@
+{
+  "name": "xnc-mock-website",
+  "version": "1.0.0",
+  "description": "XNC Mock Website - Web Scraping Test Suite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "xnc",
+    "mock-website",
+    "web-scraping",
+    "test-suite",
+    "press-releases"
+  ],
+  "author": "XNC",
+  "license": "MIT",
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "ejs": "^3.1.9"
+  }
+}

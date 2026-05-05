@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XNC - Advanced Life Sciences Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #fff;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #003d82;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #003d82;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            padding: 0.5rem 0;
+            top: 100%;
+            left: 0;
+            border-top: 3px solid #003d82;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #2c3e50;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f4f8;
+            color: #003d82;
+        }
+
+        .cta-header {
+            background-color: #003d82;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-header:hover {
+            background-color: #002449;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #003d82 0%, #005ba8 100%);
+            color: white;
+            padding: 100px 2rem;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background-color: white;
+            color: #003d82;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: #003d82;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 2rem;
+            background-color: #f8fafb;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #003d82;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border-left: 4px solid #003d82;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+
+        .service-card h3 {
+            color: #003d82;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Partners Section */
+        .partners {
+            padding: 80px 2rem;
+            background-color: white;
+        }
+
+        .partners-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        .partner-logo {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #f8fafb;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #003d82;
+            font-size: 0.95rem;
+        }
+
+        /* Latest News Section */
+        .news {
+            padding: 80px 2rem;
+            background-color: #f8fafb;
+        }
+
+        .news-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .news-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #003d82;
+        }
+
+        .view-all-link {
+            color: #003d82;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .view-all-link:hover {
+            color: #005ba8;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+        }
+
+        .news-card:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-4px);
+        }
+
+        .news-card-header {
+            height: 180px;
+            background: linear-gradient(135deg, #003d82 0%, #005ba8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .news-card-content {
+            padding: 1.5rem;
+        }
+
+        .news-date {
+            color: #999;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .news-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #003d82;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .news-link {
+            color: #003d82;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .news-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a2332;
+            color: white;
+            padding: 60px 2rem 20px;
+        }
+
+        footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <nav>
+            <a href="/" class="logo">XNC</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Solutions</a>
+                    <div class="dropdown-content">
+                        <a href="#solutions">Drug Development</a>
+                        <a href="#solutions">Manufacturing</a>
+                        <a href="#solutions">Analytical Services</a>
+                        <a href="#solutions">Regulatory Support</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Company</a>
+                    <div class="dropdown-content">
+                        <a href="/company/overview.html">About XNC</a>
+                        <a href="/company/overview.html">Leadership</a>
+                        <a href="/company/overview.html">Our Story</a>
+                        <a href="/company/press-releases.html">Press Releases</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="cta-header">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1>Transforming Life Sciences Through Innovation</h1>
+            <p>XNC is a leading partner in advanced therapeutics development, manufacturing, and commercialization. We partner with the world's most innovative companies.</p>
+            <div class="hero-buttons">
+                <a href="/company/overview.html" class="btn-primary">Learn About XNC</a>
+                <a href="#solutions" class="btn-secondary">Explore Solutions</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="solutions">
+        <div class="container">
+            <h2 class="section-title">Our Solutions</h2>
+            <p class="section-subtitle">Comprehensive services designed to accelerate your drug development and commercialization journey</p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Drug Development</h3>
+                    <p>From concept to clinical stage, we provide comprehensive development services including process optimization, scale-up support, and regulatory strategy guidance.</p>
+                </div>
+                <div class="service-card">
+                    <h3>GMP Manufacturing</h3>
+                    <p>State-of-the-art facilities and expertise in manufacturing biologics, viral vectors, and complex therapeutics under strict regulatory compliance.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Analytical Services</h3>
+                    <p>Advanced characterization and testing services to support product development, manufacturing, and regulatory submissions.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Regulatory Support</h3>
+                    <p>Expert guidance through regulatory pathways with deep experience in IND, BLA, and post-approval compliance across global markets.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners">
+        <div class="partners-content">
+            <h2 class="section-title">Trusted by Leading Innovators</h2>
+            <p class="section-subtitle">We partner with the world's most innovative pharmaceutical and biotechnology companies</p>
+
+            <div class="partners-grid">
+                <div class="partner-logo">Pharma Global</div>
+                <div class="partner-logo">BioTech Ventures</div>
+                <div class="partner-logo">Advanced Therapeutics</div>
+                <div class="partner-logo">Innovation Labs</div>
+                <div class="partner-logo">NextGen Bio</div>
+                <div class="partner-logo">Future Pharma</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest News Section -->
+    <section class="news">
+        <div class="news-container">
+            <div class="news-header">
+                <h2>Latest News & Press Releases</h2>
+                <a href="/company/press-releases.html" class="view-all-link">View All →</a>
+            </div>
+
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-card-header">Press Release</div>
+                    <div class="news-card-content">
+                        <div class="news-date">January 15, 2024</div>
+                        <div class="news-title">XNC Announces Strategic Partnership with CloudSys Inc.</div>
+                        <div class="news-excerpt">XNC today announced a strategic partnership with CloudSys Inc. to integrate cloud infrastructure solutions...</div>
+                        <a href="/company/press-releases.html" class="news-link">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-card-header">Press Release</div>
+                    <div class="news-card-content">
+                        <div class="news-date">January 20, 2024</div>
+                        <div class="news-title">XNC Collaborates with DataStream Labs on AI Research</div>
+                        <div class="news-excerpt">XNC and DataStream Labs have joined forces in a research collaboration focused on advancing artificial intelligence...</div>
+                        <a href="/company/press-releases.html" class="news-link">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-card-header">Press Release</div>
+                    <div class="news-card-content">
+                        <div class="news-date">January 25, 2024</div>
+                        <div class="news-title">XNC Enters Joint Venture with ManufactureCo</div>
+                        <div class="news-excerpt">XNC and ManufactureCo announced a new joint venture to streamline manufacturing operations across Asia-Pacific...</div>
+                        <a href="/company/press-releases.html" class="news-link">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <a href="/company/overview.html">About Us</a>
+                    <a href="/company/overview.html">Leadership</a>
+                    <a href="/company/overview.html">Careers</a>
+                    <a href="/company/press-releases.html">Press Releases</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Solutions</h4>
+                    <a href="#solutions">Drug Development</a>
+                    <a href="#solutions">Manufacturing</a>
+                    <a href="#solutions">Analytics</a>
+                    <a href="#solutions">Regulatory</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <a href="#">Case Studies</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Contact</a>
+                    <a href="#">Locations</a>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                    <a href="#">Compliance</a>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 XNC. All rights reserved. | Advanced Life Sciences Solutions | Web Scraping Test Suite</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
