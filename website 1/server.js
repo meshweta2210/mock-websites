@@ -114,6 +114,20 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Press release article pages
+app.get('/:prId.html', (req, res) => {
+  const prId = req.params.prId;
+  const prFile = path.join(__dirname, `${prId}.html`);
+
+  fs.exists(prFile, (exists) => {
+    if (exists) {
+      res.sendFile(prFile);
+    } else {
+      res.sendFile(path.join(__dirname, 'xnc-homepage.html'));
+    }
+  });
+});
+
 // Catch-all for undefined routes - serve homepage
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'xnc-homepage.html'));

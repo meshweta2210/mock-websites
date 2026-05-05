@@ -573,10 +573,10 @@
             if (release.malformedHTML) badges.push('<span class="badge badge-malformed">Malformed</span>');
             if (release.hasCAPTCHA) badges.push('<span class="badge badge-captcha">🔐 CAPTCHA</span>');
 
-            const url = `/api/press-releases/${release.id}`;
+            const url = `/${release.id}.html`;
 
             return `
-                <a href="${url}" class="release-link" target="_blank">
+                <a href="${url}" class="release-link">
                     <div class="release-link-title">
                         <span>${release.title}</span>
                         <span class="release-link-date">${release.date}</span>
