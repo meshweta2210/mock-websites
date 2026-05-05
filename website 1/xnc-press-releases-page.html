@@ -565,14 +565,6 @@
         }
 
         function createReleaseLink(release) {
-            const badges = [];
-            if (release.format === 'pdf') badges.push('<span class="badge badge-pdf">PDF</span>');
-            if (release.authenticated) badges.push('<span class="badge badge-auth">🔒 Auth</span>');
-            if (release.rateLimited) badges.push('<span class="badge badge-rate">⏱ Rate Limited</span>');
-            if (release.timeoutProne) badges.push('<span class="badge badge-timeout">⚠️ Timeout</span>');
-            if (release.malformedHTML) badges.push('<span class="badge badge-malformed">Malformed</span>');
-            if (release.hasCAPTCHA) badges.push('<span class="badge badge-captcha">🔐 CAPTCHA</span>');
-
             const url = `/${release.id}.html`;
 
             return `
@@ -581,7 +573,6 @@
                         <span>${release.title}</span>
                         <span class="release-link-date">${release.date}</span>
                     </div>
-                    ${badges.length > 0 ? `<div class="release-link-badges">${badges.join('')}</div>` : ''}
                 </a>
             `;
         }
