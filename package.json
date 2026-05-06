@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node launcher.js",
     "start:all": "node launcher.js",
-    "install:all": "for i in {2..10}; do cd website $i && npm install && cd ..; done",
+    "install:all": "node install-all.js",
     "dev": "node launcher.js",
     "test": "mocha test/**/*.test.js"
   },

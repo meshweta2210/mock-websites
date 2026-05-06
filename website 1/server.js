@@ -1,145 +1,287 @@
+require('dotenv').config();
 const express = require('express');
-const path = require('path');
-const fs = require('fs');
+const { getPressReleases, getPressReleaseById } = require('./press-release-data');
+const { assignComplexityFeatures, getRandomNavigationDepth } = require('../lib/complexity-config');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
+const COMPANY_ID = process.env.COMPANY_ID || 'xnc';
+const NAVIGATION_DEPTH = parseInt(process.env.NAVIGATION_DEPTH) || getRandomNavigationDepth();
+const HAS_RATE_LIMITING = process.env.HAS_RATE_LIMITING === 'true';
+const RATE_LIMIT_THRESHOLD = parseInt(process.env.RATE_LIMIT_THRESHOLD) || 20;
 
-// Load configuration
-const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'mock-website-config.json'), 'utf-8'));
+// Load complexity features using the assigned features function
+const assignedFeatures = assignComplexityFeatures(COMPANY_ID);
+const complexityConfig = {
+  dynamicGeneration: assignedFeatures.hasFeature('dynamic_generation'),
+  inconsistentHtml: assignedFeatures.hasFeature('inconsistent_html'),
+  pagination: assignedFeatures.hasFeature('pagination'),
+  rateLimiting: assignedFeatures.hasFeature('rate_limiting'),
+  jsRendering: assignedFeatures.hasFeature('js_rendering'),
+  redirectChains: assignedFeatures.hasFeature('redirect_chains')
+};
+
+// Rate limiting middleware - tracks requests per IP per hour
+const requestCounts = new Map();
+
+function getRateLimitKey(ip) {
+  const now = new Date();
+  const hour = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + '-' + now.getHours();
+  return `${ip}:${hour}`;
+}
+
+function rateLimitMiddleware(req, res, next) {
+  if (!complexityConfig.rateLimiting) {
+    return next();
+  }
+
+  const ip = req.ip || req.connection.remoteAddress || '127.0.0.1';
+  const key = getRateLimitKey(ip);
+  const currentCount = (requestCounts.get(key) || 0) + 1;
+  requestCounts.set(key, currentCount);
+
+  // Clean up old entries periodically
+  if (Math.random() < 0.01) {
+    const now = new Date();
+    const currentHour = now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate() + '-' + now.getHours();
+    for (const [k] of requestCounts) {
+      const keyHour = k.split(':')[1];
+      if (keyHour !== currentHour) {
+        requestCounts.delete(k);
+      }
+    }
+  }
+
+  if (currentCount > RATE_LIMIT_THRESHOLD) {
+    return res.status(429).json({
+      error: 'Too Many Requests',
+      message: `Rate limit exceeded: ${RATE_LIMIT_THRESHOLD} requests per hour`
+    });
+  }
+
+  res.set('X-RateLimit-Limit', RATE_LIMIT_THRESHOLD);
+  res.set('X-RateLimit-Remaining', Math.max(0, RATE_LIMIT_THRESHOLD - currentCount));
+
+  next();
+}
 
 // Middleware
+app.use(rateLimitMiddleware);
 app.use(express.static('public'));
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
 
-// Routes
+// Helper function to render press release HTML
+function renderPressReleaseHTML(release) {
+  // Optionally render inconsistent HTML
+  const useAlternateFormat = complexityConfig.inconsistentHtml && Math.random() > 0.5;
 
-// Homepage
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'xnc-homepage.html'));
-});
-
-app.get('/index.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'xnc-homepage.html'));
-});
-
-// Company Overview (Level 1)
-app.get('/company/overview.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'xnc-company-overview.html'));
-});
-
-app.get('/company/overview', (req, res) => {
-  res.sendFile(path.join(__dirname, 'xnc-company-overview.html'));
-});
-
-// Press Releases Archive (Level 2) - Main press releases page
-app.get('/company/press-releases.html', (req, res) => {
-  res.sendFile(path.join(__dirname, 'xnc-press-releases-page.html'));
-});
-
-app.get('/company/press-releases', (req, res) => {
-  res.sendFile(path.join(__dirname, 'xnc-press-releases-page.html'));
-});
-
-// API endpoint for press releases data
-app.get('/api/press-releases', (req, res) => {
-  const type = req.query.type || null;
-  const tier = req.query.tier || null;
-
-  let releases = [...config.releases];
-
-  if (type) {
-    releases = releases.filter(r =>
-      r.relationships.some(rel => rel.type === type)
-    );
+  if (useAlternateFormat) {
+    return `<!DOCTYPE html>
+<html>
+<head>
+  <title>${release.title}</title>
+</head>
+<body>
+  <h2>${release.title}</h2>
+  <p>Released: ${release.date}</p>
+  <div>${release.body}</div>
+  <hr/>
+  <a href="/news">Back to News</a>
+</body>
+</html>`;
   }
 
-  if (tier) {
-    releases = releases.filter(r => r.tier === parseInt(tier));
-  }
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>${release.title}</title>
+</head>
+<body>
+  <header>
+    <h1>${release.title}</h1>
+  </header>
+  <main>
+    <article>
+      <p><strong>Date:</strong> ${release.date}</p>
+      <p><strong>Company:</strong> ${release.company}</p>
+      <section>
+        <p>${release.body}</p>
+      </section>
+    </article>
+  </main>
+  <footer>
+    <a href="/press-releases">Back to Press Releases</a>
+  </footer>
+</body>
+</html>`;
+}
 
-  res.json({
-    total: releases.length,
-    releases: releases
+// Helper function to render press releases list HTML
+function renderPressReleasesListHTML(releases, page = 1) {
+  const itemsPerPage = complexityConfig.pagination ? 5 : releases.length;
+  const totalPages = Math.ceil(releases.length / itemsPerPage);
+  const startIdx = (page - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  const pageReleases = releases.slice(startIdx, endIdx);
+  const companyName = releases.length > 0 ? releases[0].company : 'Company';
+
+  let html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Press Releases - ${companyName}</title>
+</head>
+<body>
+  <header>
+    <h1>Press Releases</h1>
+  </header>
+  <main>
+    <p>Total releases: ${releases.length}</p>
+    <ul>`;
+
+  pageReleases.forEach(release => {
+    html += `
+      <li>
+        <a href="/pr-${release.id.split('-')[1]}.html">${release.title}</a>
+        <br/>
+        <small>Released: ${release.date}</small>
+      </li>`;
   });
+
+  html += `
+    </ul>`;
+
+  if (complexityConfig.pagination && totalPages > 1) {
+    html += `
+    <div class="pagination">
+      <p>Page ${page} of ${totalPages}</p>`;
+    if (page > 1) {
+      html += `<a href="/press-releases?page=${page - 1}">Previous</a>`;
+    }
+    if (page < totalPages) {
+      html += `<a href="/press-releases?page=${page + 1}">Next</a>`;
+    }
+    html += `
+    </div>`;
+  }
+
+  html += `
+  </main>
+  <footer>
+    <a href="/">Back to Home</a>
+  </footer>
+</body>
+</html>`;
+
+  return html;
+}
+
+// Routes based on NAVIGATION_DEPTH
+
+// Root route (always available)
+app.get('/', (req, res) => {
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>XNC Company - Home</title>
+</head>
+<body>
+  <header>
+    <h1>Welcome to XNC Company</h1>
+  </header>
+  <main>
+    <p>This is the official website of XNC Company.</p>
+    ${NAVIGATION_DEPTH >= 1 ? '<nav><a href="/news">News</a></nav>' : ''}
+  </main>
+</body>
+</html>`;
+  res.send(html);
 });
 
-// API endpoint for individual release
-app.get('/api/press-releases/:id', (req, res) => {
-  const release = config.releases.find(r => r.id === req.params.id);
+// Level 1: News page (available if NAVIGATION_DEPTH >= 1)
+if (NAVIGATION_DEPTH >= 1) {
+  app.get('/news', (req, res) => {
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>News - XNC Company</title>
+</head>
+<body>
+  <header>
+    <h1>Company News</h1>
+  </header>
+  <main>
+    <p>Latest updates and announcements from XNC Company.</p>
+    ${NAVIGATION_DEPTH >= 2 ? '<nav><a href="/press-releases">Press Releases</a></nav>' : ''}
+  </main>
+</body>
+</html>`;
+    res.send(html);
+  });
+}
+
+// Level 2: Press releases list (available if NAVIGATION_DEPTH >= 2)
+if (NAVIGATION_DEPTH >= 2) {
+  app.get('/press-releases', (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const releases = getPressReleases();
+    const html = renderPressReleasesListHTML(releases, page);
+    res.send(html);
+  });
+}
+
+// Press release detail page - GET /pr-:id.html
+app.get('/pr-:id.html', (req, res) => {
+  const releaseId = `pr-${req.params.id}`;
+  const release = getPressReleaseById(releaseId);
 
   if (!release) {
-    return res.status(404).json({ error: 'Press release not found' });
+    return res.status(404).send(`<!DOCTYPE html>
+<html>
+<head><title>Not Found</title></head>
+<body><h1>Press Release Not Found</h1><a href="/press-releases">Back to Press Releases</a></body>
+</html>`);
   }
 
-  res.json(release);
+  const html = renderPressReleaseHTML(release);
+  res.send(html);
 });
 
-// API endpoint for configuration
-app.get('/api/config', (req, res) => {
-  res.json({
-    site: config.site,
-    homepage: config.homepage,
-    tiers: config.tiers
-  });
-});
-
-// API endpoint for homepage data
-app.get('/api/homepage', (req, res) => {
-  res.json(config.homepage);
-});
-
-// API endpoint for tiers
-app.get('/api/tiers', (req, res) => {
-  res.json(config.tiers);
-});
-
-// API endpoint for all releases count
-app.get('/api/releases/count', (req, res) => {
-  res.json({
-    total: config.releases.length,
-    tier1: config.releases.filter(r => r.tier === 1).length,
-    tier2: config.releases.filter(r => r.tier === 2).length,
-    tier3: config.releases.filter(r => r.tier === 3).length
-  });
+// Redirect chain route - GET /pr-:id-view redirects to /pr-:id.html (always available)
+app.get('/pr-:id-view', (req, res) => {
+  res.redirect(`/pr-${req.params.id}.html`);
 });
 
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'production'
+    company: COMPANY_ID,
+    navigationDepth: NAVIGATION_DEPTH,
+    features: complexityConfig,
+    timestamp: new Date().toISOString()
   });
 });
 
-// Press release article pages
-app.get('/:prId.html', (req, res) => {
-  const prId = req.params.prId;
-  const prFile = path.join(__dirname, `${prId}.html`);
-
-  fs.exists(prFile, (exists) => {
-    if (exists) {
-      res.sendFile(prFile);
-    } else {
-      res.sendFile(path.join(__dirname, 'xnc-homepage.html'));
-    }
-  });
-});
-
-// Catch-all for undefined routes - serve homepage
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'xnc-homepage.html'));
+// 404 handler
+app.use((req, res) => {
+  res.status(404).send(`<!DOCTYPE html>
+<html>
+<head><title>Page Not Found</title></head>
+<body><h1>404 - Page Not Found</h1><a href="/">Back to Home</a></body>
+</html>`);
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Error:', err);
-  res.status(500).json({
-    error: 'Internal server error',
-    message: process.env.NODE_ENV === 'development' ? err.message : 'Something went wrong'
-  });
+  res.status(500).send(`<!DOCTYPE html>
+<html>
+<head><title>Error</title></head>
+<body><h1>500 - Internal Server Error</h1><a href="/">Back to Home</a></body>
+</html>`);
 });
 
 // Start server
@@ -147,17 +289,23 @@ app.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║                                                            ║
-║           XNC Mock Website Server Running                 ║
+║           XNC Company Mock Website Server Running          ║
 ║                                                            ║
 ║  URL: http://localhost:${PORT}                           ║
-║  Environment: ${process.env.NODE_ENV || 'production'}                              ║
+║  Company: ${COMPANY_ID}                                   ║
+║  Navigation Depth: ${NAVIGATION_DEPTH}                                      ║
 ║                                                            ║
 ║  Routes:                                                   ║
 ║  - Homepage: /                                             ║
-║  - Company Info: /company/overview.html (Level 1)         ║
-║  - Press Releases: /company/press-releases.html (Level 2) ║
-║  - API: /api/press-releases                               ║
+${NAVIGATION_DEPTH >= 1 ? '║  - News: /news\n' : ''}║  - Press Releases: /press-releases                      ║
+║  - Press Release: /pr-NNN.html                             ║
 ║  - Health: /health                                         ║
+║                                                            ║
+║  Features:                                                 ║
+║  - Rate Limiting: ${complexityConfig.rateLimiting ? 'enabled' : 'disabled'}                              ║
+║  - Dynamic Generation: ${complexityConfig.dynamicGeneration ? 'enabled' : 'disabled'}                    ║
+║  - Inconsistent HTML: ${complexityConfig.inconsistentHtml ? 'enabled' : 'disabled'}                     ║
+║  - Pagination: ${complexityConfig.pagination ? 'enabled' : 'disabled'}                                ║
 ║                                                            ║
 ╚════════════════════════════════════════════════════════════╝
   `);
