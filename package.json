@@ -1,11 +1,13 @@
 {
   "name": "xnc-mock-website",
   "version": "1.0.0",
-  "description": "XNC Mock Website - Web Scraping Test Suite",
-  "main": "start.js",
+  "description": "Nine Mock Websites - Web Scraping Test Suite with 10 zodiac company websites",
+  "main": "launcher.js",
   "scripts": {
-    "start": "node start.js",
-    "dev": "node start.js",
+    "start": "node launcher.js",
+    "start:all": "node launcher.js",
+    "install:all": "for i in {2..10}; do cd website $i && npm install && cd ..; done",
+    "dev": "node launcher.js",
     "test": "mocha test/**/*.test.js"
   },
   "keywords": [
