@@ -1,23 +1,24 @@
 require('dotenv').config();
 const express = require('express');
 const { getPressReleases, getPressReleaseById } = require('./press-release-data');
-const { assignComplexityFeatures } = require('../lib/complexity-config');
+const { assignComplexityFeatures, getRandomNavigationDepth } = require('../lib/complexity-config');
 
 const app = express();
 const PORT = process.env.PORT || 3002;
 const COMPANY_ID = process.env.COMPANY_ID || 'taurus';
-const NAVIGATION_DEPTH = parseInt(process.env.NAVIGATION_DEPTH) || 2;
+const NAVIGATION_DEPTH = parseInt(process.env.NAVIGATION_DEPTH) || getRandomNavigationDepth();
 const HAS_RATE_LIMITING = process.env.HAS_RATE_LIMITING === 'true';
 const RATE_LIMIT_THRESHOLD = parseInt(process.env.RATE_LIMIT_THRESHOLD) || 20;
 
-// Load complexity features from environment
+// Load complexity features using the assigned features function
+const assignedFeatures = assignComplexityFeatures(COMPANY_ID);
 const complexityConfig = {
-  dynamicGeneration: process.env.HAS_DYNAMIC_GENERATION === 'true',
-  inconsistentHtml: process.env.HAS_INCONSISTENT_HTML === 'true',
-  pagination: process.env.HAS_PAGINATION === 'true',
-  rateLimiting: HAS_RATE_LIMITING,
-  jsRendering: process.env.HAS_JS_RENDERING === 'true',
-  redirectChains: process.env.HAS_REDIRECT_CHAINS === 'true'
+  dynamicGeneration: assignedFeatures.hasFeature('dynamic_generation'),
+  inconsistentHtml: assignedFeatures.hasFeature('inconsistent_html'),
+  pagination: assignedFeatures.hasFeature('pagination'),
+  rateLimiting: assignedFeatures.hasFeature('rate_limiting'),
+  jsRendering: assignedFeatures.hasFeature('js_rendering'),
+  redirectChains: assignedFeatures.hasFeature('redirect_chains')
 };
 
 // Rate limiting middleware - tracks requests per IP per hour
@@ -225,7 +226,7 @@ if (NAVIGATION_DEPTH >= 1) {
 if (NAVIGATION_DEPTH >= 2) {
   app.get('/press-releases', (req, res) => {
     const page = parseInt(req.query.page) || 1;
-    const releases = getPressReleases(COMPANY_ID);
+    const releases = getPressReleases();
     const html = renderPressReleasesListHTML(releases, page);
     res.send(html);
   });
@@ -234,7 +235,7 @@ if (NAVIGATION_DEPTH >= 2) {
 // Press release detail page - GET /pr-:id.html
 app.get('/pr-:id.html', (req, res) => {
   const releaseId = `pr-${req.params.id}`;
-  const release = getPressReleaseById(releaseId, COMPANY_ID);
+  const release = getPressReleaseById(releaseId);
 
   if (!release) {
     return res.status(404).send(`<!DOCTYPE html>
@@ -248,12 +249,10 @@ app.get('/pr-:id.html', (req, res) => {
   res.send(html);
 });
 
-// Redirect chain route (if enabled) - GET /pr-:id-view redirects to /pr-:id.html
-if (complexityConfig.redirectChains) {
-  app.get('/pr-:id-view', (req, res) => {
-    res.redirect(`/pr-${req.params.id}.html`);
-  });
-}
+// Redirect chain route - GET /pr-:id-view redirects to /pr-:id.html (always available)
+app.get('/pr-:id-view', (req, res) => {
+  res.redirect(`/pr-${req.params.id}.html`);
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {
