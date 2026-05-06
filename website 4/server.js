@@ -232,6 +232,49 @@ if (NAVIGATION_DEPTH >= 2) {
   });
 }
 
+// Level 3: Multi-level navigation (available if NAVIGATION_DEPTH >= 3)
+if (NAVIGATION_DEPTH >= 3) {
+  app.get('/company', (req, res) => {
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Company - Taurus Company</title>
+</head>
+<body>
+  <header>
+    <h1>Company</h1>
+  </header>
+  <main>
+    <p>Learn more about Taurus Company.</p>
+    <nav><a href="/company/news">News & Media</a></nav>
+  </main>
+</body>
+</html>`;
+    res.send(html);
+  });
+
+  app.get('/company/news', (req, res) => {
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>News & Media - Taurus Company</title>
+</head>
+<body>
+  <header>
+    <h1>News & Media</h1>
+  </header>
+  <main>
+    <p>Company news and media resources.</p>
+    <nav><a href="/press-releases">Press Releases</a></nav>
+  </main>
+</body>
+</html>`;
+    res.send(html);
+  });
+}
+
 // Press release detail page - GET /pr-:id.html
 app.get('/pr-:id.html', (req, res) => {
   const releaseId = `pr-${req.params.id}`;
