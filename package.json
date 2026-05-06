@@ -7,6 +7,7 @@
     "start": "node launcher.js",
     "start:all": "node launcher.js",
     "install:all": "node install-all.js",
+    "postinstall": "npm run install:all",
     "dev": "node launcher.js",
     "test": "mocha test/**/*.test.js"
   },
@@ -25,6 +26,7 @@
   },
   "dependencies": {
     "express": "^4.18.2",
+    "dotenv": "^16.0.3",
     "ejs": "^3.1.9"
   },
   "devDependencies": {
