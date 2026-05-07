@@ -1,0 +1,292 @@
+{
+  "companies": [
+    {
+      "websiteNumber": 2,
+      "name": "TechVenture Solutions",
+      "shortName": "TechVenture",
+      "industry": "SaaS/Cloud",
+      "tagline": "Enterprise Software for the Digital Age",
+      "colors": {
+        "primary": "#003d82",
+        "secondary": "#005ba8",
+        "background": "#f8fafb",
+        "text": "#2c3e50"
+      },
+      "solutions": [
+        {
+          "title": "Cloud Infrastructure",
+          "description": "Scalable cloud solutions for enterprise applications"
+        },
+        {
+          "title": "API Management",
+          "description": "Comprehensive API gateway and management platform"
+        },
+        {
+          "title": "DevOps Tools",
+          "description": "Automated deployment and monitoring solutions"
+        },
+        {
+          "title": "Security Suite",
+          "description": "Enterprise-grade security and compliance tools"
+        }
+      ],
+      "partners": ["CloudCore", "DataSync", "SecureNet", "DevOpsHub"]
+    },
+    {
+      "websiteNumber": 3,
+      "name": "EcoFlow Industries",
+      "shortName": "EcoFlow",
+      "industry": "Manufacturing/Logistics",
+      "tagline": "Supply Chain Excellence Through Innovation",
+      "colors": {
+        "primary": "#1e7e34",
+        "secondary": "#2d9d47",
+        "background": "#f0f5f1",
+        "text": "#1a3a1f"
+      },
+      "solutions": [
+        {
+          "title": "Logistics Network",
+          "description": "Global supply chain optimization and tracking"
+        },
+        {
+          "title": "Manufacturing Solutions",
+          "description": "Smart factory automation and production planning"
+        },
+        {
+          "title": "Distribution Management",
+          "description": "End-to-end distribution center operations"
+        },
+        {
+          "title": "Inventory Control",
+          "description": "Real-time inventory and warehouse management"
+        }
+      ],
+      "partners": ["GlobalShip", "ManufactureHub", "LogisticsPro", "SupplyNetworks"]
+    },
+    {
+      "websiteNumber": 4,
+      "name": "FinanceCore Analytics",
+      "shortName": "FinanceCore",
+      "industry": "Finance",
+      "tagline": "Data-Driven Financial Intelligence",
+      "colors": {
+        "primary": "#003f5c",
+        "secondary": "#58508d",
+        "background": "#f9f9fb",
+        "text": "#1c1f2c"
+      },
+      "solutions": [
+        {
+          "title": "Risk Analytics",
+          "description": "Advanced risk assessment and portfolio analysis"
+        },
+        {
+          "title": "Trading Platforms",
+          "description": "High-performance algorithmic trading infrastructure"
+        },
+        {
+          "title": "Compliance Tools",
+          "description": "Regulatory compliance and reporting automation"
+        },
+        {
+          "title": "Market Intelligence",
+          "description": "Real-time market data and predictive analytics"
+        }
+      ],
+      "partners": ["MarketData", "TradingEngine", "ComplianceNet", "FinanceHub"]
+    },
+    {
+      "websiteNumber": 5,
+      "name": "BioGen Therapeutics",
+      "shortName": "BioGen",
+      "industry": "Life Sciences",
+      "tagline": "Advancing Human Health Through Science",
+      "colors": {
+        "primary": "#0066cc",
+        "secondary": "#0088ff",
+        "background": "#f0f5ff",
+        "text": "#002244"
+      },
+      "solutions": [
+        {
+          "title": "Drug Development",
+          "description": "End-to-end therapeutic development services"
+        },
+        {
+          "title": "Clinical Trials",
+          "description": "Comprehensive clinical research and trial management"
+        },
+        {
+          "title": "Manufacturing",
+          "description": "GMP-compliant biological manufacturing"
+        },
+        {
+          "title": "Regulatory Services",
+          "description": "FDA and global regulatory pathway support"
+        }
+      ],
+      "partners": ["PharmaCorp", "BioResearch", "ClinicalLabs", "TherapyHub"]
+    },
+    {
+      "websiteNumber": 6,
+      "name": "RetailMax Networks",
+      "shortName": "RetailMax",
+      "industry": "Retail/E-commerce",
+      "tagline": "Omnichannel Retail Excellence",
+      "colors": {
+        "primary": "#d32f2f",
+        "secondary": "#f57c00",
+        "background": "#fff5f0",
+        "text": "#3e2723"
+      },
+      "solutions": [
+        {
+          "title": "E-Commerce Platform",
+          "description": "Advanced omnichannel retail solutions"
+        },
+        {
+          "title": "Inventory Optimization",
+          "description": "Smart inventory and demand forecasting"
+        },
+        {
+          "title": "Customer Analytics",
+          "description": "Behavioral analytics and personalization"
+        },
+        {
+          "title": "Payment Solutions",
+          "description": "Secure multi-channel payment processing"
+        }
+      ],
+      "partners": ["RetailTech", "PaymentHub", "DeliveryPro", "CustomerAnalytics"]
+    },
+    {
+      "websiteNumber": 7,
+      "name": "GreenEnergy Corp",
+      "shortName": "GreenEnergy",
+      "industry": "Energy",
+      "tagline": "Powering a Sustainable Future",
+      "colors": {
+        "primary": "#388e3c",
+        "secondary": "#66bb6a",
+        "background": "#f1f8e9",
+        "text": "#1b5e20"
+      },
+      "solutions": [
+        {
+          "title": "Solar Solutions",
+          "description": "Large-scale photovoltaic system design and deployment"
+        },
+        {
+          "title": "Wind Integration",
+          "description": "Wind farm optimization and grid integration"
+        },
+        {
+          "title": "Energy Storage",
+          "description": "Advanced battery and storage systems"
+        },
+        {
+          "title": "Smart Grid",
+          "description": "Intelligent grid management and distribution"
+        }
+      ],
+      "partners": ["SolarTech", "WindPower", "GridSolutions", "EnergyHub"]
+    },
+    {
+      "websiteNumber": 8,
+      "name": "CloudScale Innovations",
+      "shortName": "CloudScale",
+      "industry": "Cloud Infrastructure",
+      "tagline": "Infrastructure Simplified",
+      "colors": {
+        "primary": "#1976d2",
+        "secondary": "#42a5f5",
+        "background": "#f3f6ff",
+        "text": "#0d47a1"
+      },
+      "solutions": [
+        {
+          "title": "Kubernetes Services",
+          "description": "Managed container orchestration platform"
+        },
+        {
+          "title": "Database Services",
+          "description": "Fully managed database solutions"
+        },
+        {
+          "title": "Serverless Computing",
+          "description": "Event-driven serverless architecture"
+        },
+        {
+          "title": "Disaster Recovery",
+          "description": "Business continuity and backup solutions"
+        }
+      ],
+      "partners": ["ContainerHub", "DatabasePro", "CloudOps", "BackupServices"]
+    },
+    {
+      "websiteNumber": 9,
+      "name": "SupplyChain Dynamics",
+      "shortName": "SupplyChain",
+      "industry": "Supply Chain",
+      "tagline": "Connected Supply Chains",
+      "colors": {
+        "primary": "#7b1fa2",
+        "secondary": "#ab47bc",
+        "background": "#f3e5f5",
+        "text": "#2e1a47"
+      },
+      "solutions": [
+        {
+          "title": "Visibility Platform",
+          "description": "End-to-end supply chain visibility and tracking"
+        },
+        {
+          "title": "Demand Planning",
+          "description": "AI-powered demand forecasting"
+        },
+        {
+          "title": "Supplier Network",
+          "description": "Supplier management and collaboration"
+        },
+        {
+          "title": "Blockchain Integration",
+          "description": "Distributed ledger for supply chain"
+        }
+      ],
+      "partners": ["VisibilityHub", "ForecastPro", "SupplierConnect", "BlockchainTech"]
+    },
+    {
+      "websiteNumber": 10,
+      "name": "MediaPulse Communications",
+      "shortName": "MediaPulse",
+      "industry": "Media/Publishing",
+      "tagline": "Content Intelligence Platform",
+      "colors": {
+        "primary": "#e91e63",
+        "secondary": "#ff69b4",
+        "background": "#fce4ec",
+        "text": "#880e4f"
+      },
+      "solutions": [
+        {
+          "title": "Content Management",
+          "description": "Unified content management platform"
+        },
+        {
+          "title": "Audience Analytics",
+          "description": "Deep audience insights and engagement"
+        },
+        {
+          "title": "Ad Technology",
+          "description": "Programmatic advertising platform"
+        },
+        {
+          "title": "Distribution Network",
+          "description": "Multi-channel content distribution"
+        }
+      ],
+      "partners": ["ContentHub", "AdTech", "MediaPartners", "DistributionNet"]
+    }
+  ]
+}
