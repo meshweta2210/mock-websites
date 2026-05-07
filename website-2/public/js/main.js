@@ -1,149 +1,69 @@
-// Cookie consent banner
-function setupCookieConsent() {
-  const banner = document.querySelector('.cookie-consent');
-  if (!banner) return;
+// Hamburger menu toggle
+const hamburger = document.getElementById('hamburger');
+const menu = document.getElementById('menu');
 
-  const accepted = localStorage.getItem('cookies-accepted');
-  if (accepted) {
-    banner.style.display = 'none';
-  }
-
-  document.querySelectorAll('[data-action="accept-cookies"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      localStorage.setItem('cookies-accepted', 'true');
-      banner.style.display = 'none';
-    });
+if (hamburger && menu) {
+  hamburger.addEventListener('click', () => {
+    menu.classList.toggle('active');
+    hamburger.classList.toggle('active');
   });
 
-  document.querySelectorAll('[data-action="reject-cookies"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      banner.style.display = 'none';
+  // Close menu when a link is clicked
+  const menuLinks = menu.querySelectorAll('a');
+  menuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('active');
+      hamburger.classList.remove('active');
     });
   });
 }
 
-// Newsletter popup
-function setupNewsletterPopup() {
-  const popup = document.querySelector('.newsletter-popup');
-  if (!popup) return;
-
-  const closeBtn = popup.querySelector('.popup-close');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      popup.style.display = 'none';
-    });
-  }
-
-  const form = popup.querySelector('form');
-  if (form) {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const emailInput = form.querySelector('input[type="email"]');
-      if (emailInput && emailInput.value) {
-        localStorage.setItem('newsletter-signed', 'true');
-        localStorage.setItem('newsletter-email', emailInput.value);
-        popup.style.display = 'none';
-        showNotification('Thank you for subscribing!');
-      }
-    });
-  }
-}
-
-// Related articles modal
-function setupRelatedArticlesModal() {
-  const modal = document.querySelector('.related-articles-modal');
-  if (!modal) return;
-
-  const closeBtn = modal.querySelector('.modal-close');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-      modal.style.display = 'none';
-    });
-  }
-
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-}
-
-// Show notification
-function showNotification(message) {
-  const notification = document.createElement('div');
-  notification.style.cssText = `
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #4caf50;
-    color: white;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    z-index: 9999;
-    max-width: 300px;
-  `;
-  notification.textContent = message;
-  document.body.appendChild(notification);
-
-  setTimeout(() => {
-    notification.style.opacity = '0';
-    notification.style.transition = 'opacity 0.3s ease';
-    setTimeout(() => {
-      notification.remove();
-    }, 300);
-  }, 3000);
-}
-
-// Back navigation
-function setupBackNavigation() {
-  const backLinks = document.querySelectorAll('.back-link');
-  backLinks.forEach(link => {
-    if (link.href === '#') {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.history.back();
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      const headerHeight = document.querySelector('.header').offsetHeight;
+      const targetPosition = target.offsetTop - headerHeight;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
       });
     }
   });
-}
+});
 
-// Smooth scrolling for anchor links
-function setupSmoothScroll() {
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (href === '#') return;
-
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({
-          behavior: 'smooth'
-        });
-      }
-    });
-  });
-}
-
-// Mobile menu toggle (if hamburger menu exists)
-function setupMobileMenu() {
-  const hamburger = document.querySelector('.hamburger-menu');
-  const menu = document.querySelector('.navbar .menu');
-
-  if (hamburger && menu) {
-    hamburger.addEventListener('click', () => {
-      menu.classList.toggle('active');
-    });
+// Add scroll event listener to hide/show header shadow
+let lastScrollTop = 0;
+window.addEventListener('scroll', () => {
+  const header = document.querySelector('.header');
+  if (window.pageYOffset > 10) {
+    header.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+  } else {
+    header.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
   }
-}
+});
 
-// Initialize all functionality on page load
-document.addEventListener('DOMContentLoaded', () => {
-  setupCookieConsent();
-  setupNewsletterPopup();
-  setupRelatedArticlesModal();
-  setupBackNavigation();
-  setupSmoothScroll();
-  setupMobileMenu();
+// Intersection Observer for fade-in animations on scroll
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, observerOptions);
+
+// Observe cards and sections
+document.querySelectorAll('.credential-card, .solution-card, .project-card, .testimonial-card, .cta-block').forEach(element => {
+  element.style.opacity = '0';
+  element.style.transform = 'translateY(20px)';
+  element.style.transition = 'all 0.6s ease';
+  observer.observe(element);
 });

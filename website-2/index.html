@@ -3,148 +3,329 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TechVenture Solutions</title>
+  <title>BuildCorp - Enterprise Commercial Construction</title>
   <link rel="stylesheet" href="/public/css/style.css">
   <style>
     :root {
       --primary: #003d82;
       --secondary: #005ba8;
+      --accent: #0066cc;
       --background: #f8fafb;
       --text: #2c3e50;
+      --light-gray: #ecf0f3;
+      --dark-gray: #4a5568;
+      --spacing-small: 8px;
+      --spacing-medium: 16px;
+      --spacing-large: 32px;
+      --spacing-xl: 64px;
+      --border-radius: 8px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.1);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Hamburger active state */
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
     }
   </style>
 </head>
 <body>
-  <!-- Header/Nav -->
-  <header>
+  <!-- Header/Navigation -->
+  <header class="header">
     <nav class="navbar">
-      <div class="logo">TechVenture</div>
-      <div class="menu">
-        <a href="/">Home</a>
-        <a href="/company/overview.html">About</a>
-        <a href="/company/press-releases.html">Press Releases</a>
-        <a href="#contact">Contact</a>
+      <div class="navbar-container">
+        <div class="logo">BuildCorp</div>
+        <button class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="menu" id="menu">
+          <a href="/">Home</a>
+          <a href="#services">Services</a>
+          <a href="#projects">Projects</a>
+          <a href="/company/overview.html">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <button class="btn btn-primary btn-header">Get Started</button>
       </div>
     </nav>
   </header>
 
   <!-- Hero Section -->
   <section class="hero">
+    <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1>Enterprise Software for the Digital Age</h1>
-      <p>TechVenture Solutions - Delivering innovative solutions for tomorrow's challenges</p>
+      <h1>Engineering Excellence Meets Commercial Innovation</h1>
+      <p class="hero-subtitle">Enterprise-scale construction delivering iconic commercial spaces across North America</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Projects Completed</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">40+</div>
+          <div class="stat-label">Years in Industry</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">$10B+</div>
+          <div class="stat-label">Project Value</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">99%</div>
+          <div class="stat-label">On-Time Delivery</div>
+        </div>
+      </div>
       <div class="cta-buttons">
-        <a href="/company/overview.html" class="btn btn-primary">Learn More</a>
-        <a href="#solutions" class="btn btn-secondary">Explore Solutions</a>
+        <a href="#projects" class="btn btn-primary">Explore Our Projects</a>
+        <a href="#contact" class="btn btn-secondary">Start Your Project</a>
       </div>
     </div>
   </section>
 
-  <!-- Solutions Section -->
-  <section class="solutions" id="solutions">
-    <h2>Our Solutions</h2>
-    <p class="subtitle">Comprehensive services designed for your success</p>
-    <div class="cards">
-      <div class="solution-card">
-        <h3>Cloud Infrastructure</h3>
-        <p>Scalable cloud solutions for enterprise applications</p>
-      </div>
-      <div class="solution-card">
-        <h3>API Management</h3>
-        <p>Comprehensive API gateway and management platform</p>
-      </div>
-      <div class="solution-card">
-        <h3>DevOps Tools</h3>
-        <p>Automated deployment and monitoring solutions</p>
-      </div>
-      <div class="solution-card">
-        <h3>Security Suite</h3>
-        <p>Enterprise-grade security and compliance tools</p>
+  <!-- Credentials Section -->
+  <section class="credentials" id="credentials">
+    <div class="container">
+      <h2>By The Numbers</h2>
+      <div class="credentials-grid">
+        <div class="credential-card">
+          <div class="credential-number">500+</div>
+          <div class="credential-label">Projects Completed</div>
+          <p class="credential-detail">Successful delivery across all commercial construction sectors</p>
+        </div>
+        <div class="credential-card">
+          <div class="credential-number">40+</div>
+          <div class="credential-label">Years in Industry</div>
+          <p class="credential-detail">Four decades of building trust and delivering excellence</p>
+        </div>
+        <div class="credential-card">
+          <div class="credential-number">$10B+</div>
+          <div class="credential-label">Project Value Delivered</div>
+          <p class="credential-detail">Trusted with enterprise-scale projects nationwide</p>
+        </div>
+        <div class="credential-card">
+          <div class="credential-number">99%</div>
+          <div class="credential-label">On-Time Delivery</div>
+          <p class="credential-detail">Consistent, reliable execution on every project</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Featured Press Releases -->
-  <section class="news">
-    <h2>Latest News & Press Releases</h2>
-    <div class="news-grid">
-      <article class="news-card">
-        <div class="news-header">
-          <h3>TechVenture Solutions Acquires Key Business Unit from EcoFlow Industries</h3>
-          <span class="news-date">2026-04-27</span>
+  <!-- Solutions/Capabilities Section -->
+  <section class="services" id="services">
+    <div class="container">
+      <h2>What We Build</h2>
+      <p class="section-subtitle">Specialized expertise across the commercial construction spectrum</p>
+      <div class="solutions-grid">
+        <div class="solution-card">
+          <div class="solution-icon">🏢</div>
+          <h3>Office & Corporate Spaces</h3>
+          <p>Modern workplaces designed for collaboration and efficiency. From executive headquarters to collaborative campuses, we create environments where businesses thrive.</p>
+          <a href="#contact" class="learn-more">Learn More →</a>
         </div>
-        <p class="news-excerpt">TechVenture Solutions announced the acquisition of a strategic business unit from EcoFlow Industries in an all-cash transaction. The acquisition stren...</p>
-        <a href="/company/press-releases.html" class="read-more">Read More</a>
-      </article>
-      <article class="news-card">
-        <div class="news-header">
-          <h3>TechVenture Solutions Enters New Market with Support from SupplyChain Dynamics</h3>
-          <span class="news-date">2026-04-23</span>
+        <div class="solution-card">
+          <div class="solution-icon">🛍️</div>
+          <h3>Retail & Mixed-Use Development</h3>
+          <p>Vibrant commercial spaces that drive foot traffic and revenue. Integrated retail, office, and residential developments that energize communities.</p>
+          <a href="#contact" class="learn-more">Learn More →</a>
         </div>
-        <p class="news-excerpt">TechVenture Solutions announced its entry into a new market segment with strategic support from partner SupplyChain Dynamics....</p>
-        <a href="/company/press-releases.html" class="read-more">Read More</a>
-      </article>
-      <article class="news-card">
-        <div class="news-header">
-          <h3>TechVenture Solutions Announces Strategic Partnership with GreenEnergy Corp to Expand Market Reach</h3>
-          <span class="news-date">2026-04-12</span>
+        <div class="solution-card">
+          <div class="solution-icon">🏨</div>
+          <h3>Hospitality & Hotels</h3>
+          <p>Guest-centric designs with operational excellence. Luxury resorts, boutique hotels, and hospitality venues that exceed guest expectations.</p>
+          <a href="#contact" class="learn-more">Learn More →</a>
         </div>
-        <p class="news-excerpt">TechVenture Solutions today announced a new strategic partnership with GreenEnergy Corp. This collaboration will enable both companies to combine thei...</p>
-        <a href="/company/press-releases.html" class="read-more">Read More</a>
-      </article>
+        <div class="solution-card">
+          <div class="solution-icon">⚙️</div>
+          <h3>Data Centers & Tech Facilities</h3>
+          <p>Specialized infrastructure with precision engineering. Secure, resilient facilities built to the highest technical standards for critical operations.</p>
+          <a href="#contact" class="learn-more">Learn More →</a>
+        </div>
+      </div>
     </div>
-    <a href="/company/press-releases.html" class="btn btn-secondary">View All Press Releases</a>
   </section>
 
-  <!-- Partners Section -->
-  <section class="partners">
-    <h2>Trusted Partners</h2>
-    <div class="partners-grid">
-      <div class="partner-item">
-        <p>CloudCore</p>
+  <!-- Featured Projects Section -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <h2>Landmark Projects</h2>
+      <p class="section-subtitle">Delivering transformative commercial spaces</p>
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+          <div class="project-content">
+            <h3>The Metropolitan Tower</h3>
+            <div class="project-meta">
+              <span class="project-location">📍 New York, NY</span>
+              <span class="project-year">Completed 2024</span>
+            </div>
+            <p>A 52-story mixed-use tower combining office, retail, and residential space. $450M project featuring innovative facade design and sustainable building systems.</p>
+            <a href="#" class="project-link">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+          <div class="project-content">
+            <h3>Commerce Plaza Retrofit</h3>
+            <div class="project-meta">
+              <span class="project-location">📍 San Francisco, CA</span>
+              <span class="project-year">Completed 2023</span>
+            </div>
+            <p>Complete renovation of a 1980s office complex into a modern, open-concept workspace. $120M project with zero impact to ongoing operations.</p>
+            <a href="#" class="project-link">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+          <div class="project-content">
+            <h3>Harbor District Development</h3>
+            <div class="project-meta">
+              <span class="project-location">📍 Boston, MA</span>
+              <span class="project-year">Completed 2022</span>
+            </div>
+            <p>Mixed-use waterfront development with 500K sq ft of retail, office, and residential. $350M project completed 3 weeks ahead of schedule.</p>
+            <a href="#" class="project-link">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+          <div class="project-content">
+            <h3>Innovation Hub Chicago</h3>
+            <div class="project-meta">
+              <span class="project-location">📍 Chicago, IL</span>
+              <span class="project-year">Completed 2023</span>
+            </div>
+            <p>State-of-the-art innovation center for tech startups and corporate research. $280M project with integrated lab spaces and collaborative areas.</p>
+            <a href="#" class="project-link">View Details →</a>
+          </div>
+        </div>
       </div>
-      <div class="partner-item">
-        <p>DataSync</p>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials" id="testimonials">
+    <div class="container">
+      <h2>What Our Partners Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">Working with BuildCorp was transformational. Their engineering excellence ensured our complex project stayed on budget while exceeding our expectations.</p>
+          <div class="testimonial-author">
+            <div class="author-name">Jane Smith</div>
+            <div class="author-title">VP Real Estate, Fortune 500 Corporation</div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">They bring innovation to every project. The attention to detail and proactive problem-solving set them apart in our industry. Exceptional partners.</p>
+          <div class="testimonial-author">
+            <div class="author-name">Michael Chen</div>
+            <div class="author-title">Development Director, Regional Development Group</div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-quote">"</div>
+          <p class="testimonial-text">As architects, we appreciated their collaborative approach. They understood our vision and delivered beyond our specifications on every front.</p>
+          <div class="testimonial-author">
+            <div class="author-name">Sarah Rodriguez</div>
+            <div class="author-title">Principal Architect, Architecture Firm</div>
+          </div>
+        </div>
       </div>
-      <div class="partner-item">
-        <p>SecureNet</p>
-      </div>
-      <div class="partner-item">
-        <p>DevOpsHub</p>
+    </div>
+  </section>
+
+  <!-- Multi-Segment CTA Section -->
+  <section class="audience-ctas" id="audience-ctas">
+    <div class="container">
+      <h2>Next Steps</h2>
+      <p class="section-subtitle">Choose your path</p>
+      <div class="cta-grid">
+        <div class="cta-block">
+          <div class="cta-icon">🤝</div>
+          <h3>For Developers</h3>
+          <p>Partner with us on transformative commercial projects. Let's build something exceptional together.</p>
+          <a href="#contact" class="btn btn-primary btn-block">Review Our Portfolio</a>
+        </div>
+        <div class="cta-block">
+          <div class="cta-icon">🏢</div>
+          <h3>For Corporate Clients</h3>
+          <p>Exceptional construction services for corporate real estate needs. From concept to completion.</p>
+          <a href="#contact" class="btn btn-primary btn-block">Schedule Consultation</a>
+        </div>
+        <div class="cta-block">
+          <div class="cta-icon">✏️</div>
+          <h3>For Architects & Consultants</h3>
+          <p>Collaborative partnerships with design professionals. We understand and respect your vision.</p>
+          <a href="#contact" class="btn btn-primary btn-block">Partnership Opportunities</a>
+        </div>
+        <div class="cta-block">
+          <div class="cta-icon">📊</div>
+          <h3>For Investors</h3>
+          <p>Track record of delivering value on complex projects. Proven financial performance across sectors.</p>
+          <a href="#contact" class="btn btn-primary btn-block">View Track Record</a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-column">
-        <h3>Company</h3>
-        <ul>
-          <li><a href="/company/overview.html">About Us</a></li>
-          <li><a href="/company/press-releases.html">Press Releases</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Company</h3>
+          <p class="footer-tagline">Delivering engineering excellence and commercial innovation across North America.</p>
+          <p class="footer-contact">
+            <strong>BuildCorp</strong><br>
+            123 Commerce Street<br>
+            New York, NY 10001<br>
+            <a href="tel:+12025551234">(202) 555-1234</a>
+          </p>
+        </div>
+        <div class="footer-column">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="#services">Office & Corporate</a></li>
+            <li><a href="#services">Retail & Mixed-Use</a></li>
+            <li><a href="#services">Hospitality</a></li>
+            <li><a href="#services">Data Centers</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="/company/press-releases.html">News & Press</a></li>
+            <li><a href="/company/overview.html">About Us</a></li>
+            <li><a href="#projects">Featured Projects</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
       </div>
-      <div class="footer-column">
-        <h3>Solutions</h3>
-        <ul>
-          <li><a href="#">Cloud Infrastructure</a></li>
-          <li><a href="#">API Management</a></li>
-          <li><a href="#">DevOps Tools</a></li>
-          <li><a href="#">Security Suite</a></li>
-        </ul>
+      <div class="footer-bottom">
+        <p>&copy; 2024 BuildCorp. All rights reserved.</p>
       </div>
-      <div class="footer-column">
-        <h3>Legal</h3>
-        <ul>
-          <li><a href="#">Privacy Policy</a></li>
-          <li><a href="#">Terms of Service</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2024 TechVenture Solutions. All rights reserved.</p>
     </div>
   </footer>
 
