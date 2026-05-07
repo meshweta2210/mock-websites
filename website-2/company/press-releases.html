@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Press Releases - TechVenture Solutions</title>
+  <link rel="stylesheet" href="/public/css/style.css">
+</head>
+<body>
+  <!-- Header/Nav -->
+  <header>
+    <nav class="navbar">
+      <a href="/" class="back-link">← Back to Home</a>
+      <h1 class="page-title">Press Releases</h1>
+    </nav>
+  </header>
+
+  <main>
+    <section class="press-releases-archive">
+      <div class="archive-header">
+        <h2>Latest News & Press Releases</h2>
+        <p>Stay updated on company announcements, partnerships, and industry news</p>
+      </div>
+
+      <div id="articles-container" class="articles-grid">
+        <!-- Articles loaded here by AJAX -->
+      </div>
+
+      <div class="pagination-controls">
+        <button id="load-more" class="btn btn-primary">Load More Articles</button>
+        <p id="loading-message" style="display:none;">Loading...</p>
+        <p id="end-message" style="display:none;">No more articles</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 TechVenture Solutions. All rights reserved.</p>
+  </footer>
+
+  <script src="/public/js/ajax-pagination.js"></script>
+  <script src="../press-release-data.js"></script>
+  <script>
+    // Initialize pagination with first 3 articles
+    document.addEventListener('DOMContentLoaded', function() {
+      loadInitialArticles();
+    });
+
+    function loadInitialArticles() {
+      // Load first 3 articles from press-release-data.js
+      const articles = window.pressReleases.slice(0, 3);
+      const container = document.getElementById('articles-container');
+      container.innerHTML = articles.map(article => `
+        <div class="article-card">
+          <h3><a href="/press-releases/${article.id}.html">${article.title}</a></h3>
+          <p class="date">${article.date}</p>
+          <span class="relationship-badge ${article.relationshipType}">${formatRelationshipType(article.relationshipType)}</span>
+          <p class="excerpt">${article.excerpt}</p>
+          <a href="/press-releases/${article.id}.html" class="read-more">Read Full Article →</a>
+        </div>
+      `).join('');
+    }
+
+    function formatRelationshipType(type) {
+      const map = {
+        'supplier': 'Supplier',
+        'distributor': 'Distributor',
+        'marketing_partner': 'Marketing Partner',
+        'manufacturer': 'Manufacturer',
+        'competitor': 'Competitor',
+        'joint_venture': 'Joint Venture',
+        'research_collaboration': 'Research Collaboration'
+      };
+      return map[type] || type;
+    }
+
+    let currentPage = 1;
+    const articlesPerPage = 3;
+
+    document.getElementById('load-more').addEventListener('click', function() {
+      currentPage++;
+      loadMoreArticles(currentPage);
+    });
+
+    function loadMoreArticles(page) {
+      const startIdx = page * articlesPerPage;
+      const articles = window.pressReleases.slice(startIdx, startIdx + articlesPerPage);
+
+      if (articles.length === 0) {
+        document.getElementById('load-more').style.display = 'none';
+        document.getElementById('end-message').style.display = 'block';
+        return;
+      }
+
+      const container = document.getElementById('articles-container');
+      const html = articles.map(article => `
+        <div class="article-card">
+          <h3><a href="/press-releases/${article.id}.html">${article.title}</a></h3>
+          <p class="date">${article.date}</p>
+          <span class="relationship-badge ${article.relationshipType}">${formatRelationshipType(article.relationshipType)}</span>
+          <p class="excerpt">${article.excerpt}</p>
+          <a href="/press-releases/${article.id}.html" class="read-more">Read Full Article →</a>
+        </div>
+      `).join('');
+
+      container.innerHTML += html;
+    }
+  </script>
+</body>
+</html>

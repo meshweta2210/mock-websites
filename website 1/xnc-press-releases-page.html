@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Press Releases - XNC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f8fafb;
+        }
+
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #003d82;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #003d82;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 220px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            padding: 0.5rem 0;
+            top: 100%;
+            left: 0;
+            border-top: 3px solid #003d82;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #2c3e50;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f0f4f8;
+            color: #003d82;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .breadcrumb {
+            padding: 1.5rem 2rem;
+            color: #666;
+            font-size: 0.95rem;
+            background-color: white;
+        }
+
+        .breadcrumb a {
+            color: #003d82;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #003d82 0%, #005ba8 100%);
+            color: white;
+            padding: 60px 2rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 40px 2rem;
+        }
+
+        .filters-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #003d82;
+        }
+
+        .filter-group select {
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            background-color: white;
+        }
+
+        .filter-group button {
+            background-color: #003d82;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-group button:hover {
+            background-color: #002449;
+        }
+
+        .releases-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .release-link {
+            display: block;
+            padding: 1.25rem;
+            background: white;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #003d82;
+            border-left: 4px solid #003d82;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .release-link:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            transform: translateX(4px);
+            background-color: #f8fafb;
+        }
+
+        .release-link-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 1rem;
+        }
+
+        .release-link-date {
+            color: #999;
+            font-size: 0.9rem;
+            font-weight: normal;
+        }
+
+        .release-link-badges {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.75rem;
+        }
+
+        .releases-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .release-card {
+            background: white;
+            padding: 1.75rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.3s ease;
+            border-left: 4px solid #003d82;
+        }
+
+        .release-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+            transform: translateX(4px);
+        }
+
+        .release-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .release-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #003d82;
+            margin-bottom: 0.25rem;
+            flex: 1;
+        }
+
+        .release-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-pdf {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        .badge-auth {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .badge-rate {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .badge-timeout {
+            background-color: #9c27b0;
+            color: white;
+        }
+
+        .badge-malformed {
+            background-color: #e91e63;
+            color: white;
+        }
+
+        .badge-captcha {
+            background-color: #673ab7;
+            color: white;
+        }
+
+        .release-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .release-body {
+            color: #666;
+            margin: 1rem 0;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .relationships {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .relationship-tag {
+            background-color: #e8f0fe;
+            color: #003d82;
+            padding: 0.4rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .pagination a,
+        .pagination span {
+            padding: 0.75rem 1rem;
+            background-color: white;
+            color: #003d82;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #003d82;
+            color: white;
+            border-color: #003d82;
+        }
+
+        .pagination .current {
+            background-color: #003d82;
+            color: white;
+            border-color: #003d82;
+        }
+
+        .pagination .disabled {
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        footer {
+            background-color: #1a2332;
+            color: white;
+            padding: 60px 2rem 20px;
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .footer-column a {
+            display: block;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 2rem;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.9rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .filter-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .release-header {
+                flex-direction: column;
+            }
+
+            .nav-menu {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">XNC</a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Solutions</a>
+                    <div class="dropdown-content">
+                        <a href="/#solutions">Drug Development</a>
+                        <a href="/#solutions">Manufacturing</a>
+                        <a href="/#solutions">Analytical Services</a>
+                        <a href="/#solutions">Regulatory Support</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link">Company</a>
+                    <div class="dropdown-content">
+                        <a href="/company/overview.html">About XNC</a>
+                        <a href="/company/overview.html">Leadership</a>
+                        <a href="/company/overview.html">Our Story</a>
+                        <a href="/company/press-releases.html">Press Releases</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Resources</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a href="/">Home</a> / <a href="/company/overview.html">Company</a> / <a href="/company/press-releases.html">Press Releases</a>
+        </div>
+    </div>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Press Releases</h1>
+            <p>Stay updated on XNC's latest partnerships, collaborations, research initiatives, and business developments</p>
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container">
+            <div class="releases-list" id="releases-list"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="/company/overview.html">About Us</a>
+                <a href="/company/overview.html">Leadership</a>
+                <a href="/company/overview.html">Careers</a>
+                <a href="/company/press-releases.html">Press Releases</a>
+            </div>
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <a href="/#solutions">Drug Development</a>
+                <a href="/#solutions">Manufacturing</a>
+                <a href="/#solutions">Analytics</a>
+                <a href="/#solutions">Regulatory</a>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <a href="#">Case Studies</a>
+                <a href="#">Blog</a>
+                <a href="#">Contact</a>
+                <a href="#">Locations</a>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">Compliance</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 XNC. All rights reserved. | Advanced Life Sciences Solutions | Web Scraping Test Suite</p>
+        </div>
+    </footer>
+
+    <!-- Inline release data (10 selected releases only) -->
+    <script>
+        const RELEASES_DATA = [
+            {"id": "pr-001", "tier": 1, "title": "XNC Announces Strategic Partnership with CloudSys Inc.", "date": "2024-01-15", "format": "html", "authenticated": false, "relationships": [{"type": "partnership", "company": "CloudSys Inc.", "description": "announced strategic partnership with CloudSys Inc. to integrate cloud infrastructure"}], "body": "XNC today announced a strategic partnership with CloudSys Inc. to integrate cloud infrastructure solutions."},
+            {"id": "pr-061", "tier": 2, "title": "XNC Partners with CloudScale - PDF Available", "date": "Jan 15, 2024", "format": "pdf", "authenticated": false, "relationships": [{"type": "partnership", "company": "CloudScale", "description": "strategic partnership with CloudScale"}], "body": "XNC and CloudScale have formed a strategic partnership."},
+            {"id": "pr-087", "tier": 3, "title": "XNC Premium Partnership - AUTHENTICATED", "date": "2024-01-10", "format": "html", "authenticated": true, "requiresLogin": true, "relationships": [{"type": "partnership", "company": "PremiumPartner", "description": "premium partnership with PremiumPartner"}], "body": "XNC announces premium partnership (requires login)."},
+            {"id": "pr-005", "tier": 1, "title": "XNC Partners with MarketWise for Marketing Initiative", "date": "2024-02-05", "format": "html", "authenticated": false, "relationships": [{"type": "marketing", "company": "MarketWise", "description": "partnership with MarketWise for joint marketing initiatives"}], "body": "XNC and MarketWise have partnered on a comprehensive marketing initiative targeting enterprise customers."},
+            {"id": "pr-070", "tier": 2, "title": "Joint Venture Announcement", "date": "2/29/2024", "format": "html", "authenticated": false, "relationships": [{"type": "joint_venture", "company": "JVPartner", "description": "joint venture with JVPartner"}], "body": "XNC announces new joint venture."},
+            {"id": "pr-093", "tier": 3, "title": "CAPTCHA Protected Release", "date": "2024-02-05", "format": "html", "authenticated": false, "hasCAPTCHA": true, "captchaType": "math", "relationships": [{"type": "partnership", "company": "CAPTCHATest", "description": "CAPTCHA protected release"}], "body": "XNC announcement (CAPTCHA required to view)."},
+            {"id": "pr-020", "tier": 1, "title": "XNC Forms Alliance with AdvancedMfg", "date": "2024-04-20", "format": "html", "authenticated": false, "relationships": [{"type": "manufacturing", "company": "AdvancedMfg", "description": "manufacturing alliance with AdvancedMfg"}], "body": "XNC and AdvancedMfg have formed an alliance to develop next-generation manufacturing processes."},
+            {"id": "pr-075", "tier": 2, "title": "Investor Relations Update Q1 2024", "date": "3/25/2024", "format": "html", "authenticated": false, "relationships": [{"type": "investor_relations", "company": "Q1Investors", "description": "Q1 investor relations update"}], "body": "XNC provides Q1 investor relations update."},
+            {"id": "pr-100", "tier": 3, "title": "Everything Complex - All Features", "date": "2024-03-10", "format": "pdf", "authenticated": true, "requiresLogin": true, "rateLimited": true, "timeoutProne": true, "hasCAPTCHA": true, "malformedContent": true, "brokenLinks": 4, "relationships": [{"type": "partnership", "company": "ComplexTest", "description": "all advanced features combined"}, {"type": "research_collaboration", "company": "AdvancedTest", "description": "multiple relationship types"}, {"type": "joint_venture", "company": "FinalTest", "description": "final comprehensive test"}], "body": "XNC announcement (combines all advanced challenges)."},
+            {"id": "pr-035", "tier": 1, "title": "XNC Distribution Deal with LogisticWorld", "date": "2024-07-05", "format": "html", "authenticated": false, "relationships": [{"type": "distribution_logistics", "company": "LogisticWorld", "description": "distribution deal with LogisticWorld"}], "body": "XNC and LogisticWorld signed a distribution deal covering South America."}
+        ];
+
+        // Select 10 releases in a chaotic mix (tiers 1, 2, 3 mixed)
+        const selectedReleaseIds = ['pr-001', 'pr-061', 'pr-087', 'pr-005', 'pr-070', 'pr-093', 'pr-020', 'pr-075', 'pr-100', 'pr-035'];
+
+        function renderReleases() {
+            const container = document.getElementById('releases-list');
+            const selectedReleases = RELEASES_DATA.filter(r => selectedReleaseIds.includes(r.id));
+
+            container.innerHTML = selectedReleases.map(createReleaseLink).join('');
+        }
+
+        function createReleaseLink(release) {
+            const url = `/${release.id}.html`;
+
+            return `
+                <a href="${url}" class="release-link">
+                    <div class="release-link-title">
+                        <span>${release.title}</span>
+                        <span class="release-link-date">${release.date}</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', renderReleases);
+    </script>
+</body>
+</html>

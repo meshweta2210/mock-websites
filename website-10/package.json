@@ -1,0 +1,14 @@
+{
+  "name": "website-10",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "cookie-parser": "^1.4.6",
+    "compression": "^1.7.4"
+  }
+}

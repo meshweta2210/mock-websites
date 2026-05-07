@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News & Updates - Premier Manufacturing</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f5f5f5; }
+        header { background-color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        nav { max-width: 1400px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 700; color: #1e3a8a; text-decoration: none; }
+        .nav-menu { display: flex; list-style: none; gap: 2rem; }
+        .nav-link { color: #333; text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; border-bottom: 2px solid transparent; }
+        .nav-link:hover { color: #1e3a8a; border-bottom: 2px solid #1e3a8a; }
+        .page-header { background: linear-gradient(135deg, #1e3a8a 0%, #2c5282 100%); color: white; padding: 4rem 2rem; text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 2rem; }
+        .content { padding: 4rem 0; }
+        .filters { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .filter-btn { padding: 0.6rem 1.2rem; background-color: white; border: 2px solid #ddd; border-radius: 4px; cursor: pointer; font-weight: 500; color: #666; transition: all 0.3s ease; }
+        .filter-btn.active { background-color: #1e3a8a; color: white; border-color: #1e3a8a; }
+        .filter-btn:hover { border-color: #1e3a8a; color: #1e3a8a; }
+        .news-list { display: flex; flex-direction: column; gap: 2rem; }
+        .news-article { background: white; border-radius: 8px; padding: 2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); transition: all 0.3s ease; border-left: 4px solid #1e3a8a; }
+        .news-article:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); transform: translateX(4px); }
+        .article-date { color: #999; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        .article-title { font-size: 1.5rem; color: #1e3a8a; margin: 0.75rem 0; font-weight: 700; }
+        .article-category { display: inline-block; background-color: #eff6ff; color: #1e3a8a; padding: 0.4rem 0.8rem; border-radius: 3px; font-size: 0.8rem; font-weight: 600; margin-bottom: 1rem; }
+        .article-excerpt { color: #666; line-height: 1.7; margin-bottom: 1.2rem; font-size: 0.95rem; }
+        .article-meta { display: flex; gap: 2rem; font-size: 0.85rem; color: #999; margin-bottom: 1rem; }
+        .read-full { color: #1e3a8a; text-decoration: none; font-weight: 600; display: inline-block; transition: all 0.3s ease; }
+        .read-full:hover { transform: translateX(4px); }
+        .read-full::after { content: ' →'; }
+        .sidebar { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .sidebar h3 { color: #1e3a8a; margin-bottom: 1.5rem; font-size: 1.2rem; }
+        .sidebar-item { padding: 0.75rem 0; border-bottom: 1px solid #eee; }
+        .sidebar-item:last-child { border-bottom: none; }
+        .sidebar-link { color: #1e3a8a; text-decoration: none; font-size: 0.95rem; transition: all 0.3s ease; }
+        .sidebar-link:hover { transform: translateX(4px); font-weight: 600; }
+        .main-content { display: grid; grid-template-columns: 1fr 280px; gap: 2rem; align-items: start; }
+        .pagination { display: flex; gap: 0.5rem; justify-content: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #eee; }
+        .pagination a, .pagination span { padding: 0.6rem 0.9rem; border: 1px solid #ddd; border-radius: 4px; text-decoration: none; color: #1e3a8a; font-weight: 500; transition: all 0.3s ease; }
+        .pagination a:hover { background-color: #1e3a8a; color: white; }
+        .pagination .current { background-color: #1e3a8a; color: white; border-color: #1e3a8a; }
+        footer { background-color: #1a2332; color: white; padding: 3rem 2rem 1rem; margin-top: 4rem; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto 2rem; }
+        .footer-column h4 { margin-bottom: 1rem; font-size: 0.95rem; font-weight: 700; }
+        .footer-column a { display: block; color: #aaa; text-decoration: none; font-size: 0.85rem; margin-bottom: 0.6rem; transition: color 0.3s ease; }
+        .footer-column a:hover { color: white; }
+        .footer-bottom { border-top: 1px solid #333; padding-top: 1.5rem; text-align: center; color: #aaa; font-size: 0.85rem; max-width: 1200px; margin: 0 auto; }
+        @media (max-width: 768px) {
+            .main-content { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 1.8rem; }
+            .filters { gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">PREMIER MFG</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/#about" class="nav-link">About</a></li>
+                <li><a href="/#products" class="nav-link">Products</a></li>
+                <li><a href="/news" class="nav-link">News</a></li>
+                <li><a href="/#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="page-header">
+        <h1>News & Updates</h1>
+        <p>Latest developments, partnerships, and company milestones</p>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <div class="filters">
+                <button class="filter-btn active">All News</button>
+                <button class="filter-btn">Expansion</button>
+                <button class="filter-btn">Partnerships</button>
+                <button class="filter-btn">Awards</button>
+                <button class="filter-btn">Technology</button>
+            </div>
+
+            <div class="main-content">
+                <div class="news-list">
+                    <article class="news-article">
+                        <div class="article-date">May 2, 2025</div>
+                        <h2 class="article-title">Premier Manufacturing Expands Aerospace Division</h2>
+                        <span class="article-category">Expansion</span>
+                        <p class="article-excerpt">Premier Manufacturing announced a major investment in a new state-of-the-art precision machining facility dedicated to aerospace component manufacturing. The $50M facility expansion will create 50 new positions and double our aerospace production capacity, positioning us to serve growing demand from leading aircraft manufacturers.</p>
+                        <div class="article-meta">
+                            <span>By News Team</span>
+                            <span>5 min read</span>
+                        </div>
+                        <a href="#" class="read-full">Read Full Article</a>
+                    </article>
+
+                    <article class="news-article">
+                        <div class="article-date">April 28, 2025</div>
+                        <h2 class="article-title">Industry Recognition: Best Manufacturing Innovator Award</h2>
+                        <span class="article-category">Awards</span>
+                        <p class="article-excerpt">Premier Manufacturing received the prestigious "Best Manufacturing Innovator" award from the National Industrial Association. The recognition celebrates our continuous improvement initiatives, adoption of Industry 4.0 technologies, and commitment to sustainable manufacturing practices. CEO John Mitchell accepted the award at the annual industry conference.</p>
+                        <div class="article-meta">
+                            <span>By News Team</span>
+                            <span>3 min read</span>
+                        </div>
+                        <a href="#" class="read-full">Read Full Article</a>
+                    </article>
+
+                    <article class="news-article">
+                        <div class="article-date">April 15, 2025</div>
+                        <h2 class="article-title">Strategic Partnership with Global Supply Chain Leader</h2>
+                        <span class="article-category">Partnerships</span>
+                        <p class="article-excerpt">Premier Manufacturing announces a strategic partnership with LogistiCorp Global, a leading supply chain and logistics company. This collaboration enhances our distribution capabilities, enables faster delivery to international markets, and provides integrated logistics solutions for our clients worldwide.</p>
+                        <div class="article-meta">
+                            <span>By News Team</span>
+                            <span>4 min read</span>
+                        </div>
+                        <a href="#" class="read-full">Read Full Article</a>
+                    </article>
+
+                    <article class="news-article">
+                        <div class="article-date">April 1, 2025</div>
+                        <h2 class="article-title">Launch of Advanced Robotics Initiative</h2>
+                        <span class="article-category">Technology</span>
+                        <p class="article-excerpt">We are excited to announce the launch of our Advanced Robotics Initiative, integrating cutting-edge automation technology into our fabrication processes. This investment improves precision, reduces production time by 25%, and allows our team to focus on complex engineering tasks that require human expertise.</p>
+                        <div class="article-meta">
+                            <span>By News Team</span>
+                            <span>6 min read</span>
+                        </div>
+                        <a href="#" class="read-full">Read Full Article</a>
+                    </article>
+
+                    <article class="news-article">
+                        <div class="article-date">March 18, 2025</div>
+                        <h2 class="article-title">Premier Achieves Carbon Neutral Certification</h2>
+                        <span class="article-category">Expansion</span>
+                        <p class="article-excerpt">Premier Manufacturing is proud to announce our certification as a carbon-neutral manufacturing facility. Through renewable energy investments, process optimization, and waste reduction initiatives, we've achieved net-zero emissions for all direct operations and committed to Scope 3 emission reductions by 2030.</p>
+                        <div class="article-meta">
+                            <span>By News Team</span>
+                            <span>5 min read</span>
+                        </div>
+                        <a href="#" class="read-full">Read Full Article</a>
+                    </article>
+
+                    <article class="news-article">
+                        <div class="article-date">March 5, 2025</div>
+                        <h2 class="article-title">New Training Center Opens in Manufacturing Hub</h2>
+                        <span class="article-category">Technology</span>
+                        <p class="article-excerpt">Premier Manufacturing opened a state-of-the-art training and development center focused on advanced manufacturing skills, Industry 4.0 technologies, and professional development. The center will train 300+ professionals annually and supports both internal workforce development and community education initiatives.</p>
+                        <div class="article-meta">
+                            <span>By News Team</span>
+                            <span>4 min read</span>
+                        </div>
+                        <a href="#" class="read-full">Read Full Article</a>
+                    </article>
+
+                    <article class="news-article">
+                        <div class="article-date">February 20, 2025</div>
+                        <h2 class="article-title">Record Q1 Results Reflect Strong Market Demand</h2>
+                        <span class="article-category">Expansion</span>
+                        <p class="article-excerpt">Premier Manufacturing reported record revenue and profitability in Q1 2025, with a 32% year-over-year increase in orders. Strong demand across automotive, aerospace, and energy sectors, combined with operational efficiency gains, drove these exceptional results. The company is well-positioned for continued growth throughout 2025.</p>
+                        <div class="article-meta">
+                            <span>By News Team</span>
+                            <span>3 min read</span>
+                        </div>
+                        <a href="#" class="read-full">Read Full Article</a>
+                    </article>
+
+                    <article class="news-article">
+                        <div class="article-date">February 5, 2025</div>
+                        <h2 class="article-title">Acquisition of Advanced Precision Technologies Inc.</h2>
+                        <span class="article-category">Partnerships</span>
+                        <p class="article-excerpt">Premier Manufacturing announced the acquisition of Advanced Precision Technologies Inc., a leading developer of precision machining solutions. This strategic acquisition expands our product portfolio and technological capabilities, particularly in high-tolerance component manufacturing for medical and aerospace applications.</p>
+                        <div class="article-meta">
+                            <span>By News Team</span>
+                            <span>5 min read</span>
+                        </div>
+                        <a href="#" class="read-full">Read Full Article</a>
+                    </article>
+
+                    <div class="pagination">
+                        <span class="current">1</span>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">Next</a>
+                    </div>
+                </div>
+
+                <aside class="sidebar">
+                    <h3>Recent Categories</h3>
+                    <div class="sidebar-item"><a href="#" class="sidebar-link">📢 Expansion (3)</a></div>
+                    <div class="sidebar-item"><a href="#" class="sidebar-link">🤝 Partnerships (2)</a></div>
+                    <div class="sidebar-item"><a href="#" class="sidebar-link">🏆 Awards (1)</a></div>
+                    <div class="sidebar-item"><a href="#" class="sidebar-link">⚙️ Technology (2)</a></div>
+
+                    <h3 style="margin-top: 2.5rem; margin-bottom: 1.5rem;">Subscribe</h3>
+                    <form style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <input type="email" placeholder="Your email" style="padding: 0.7rem; border: 1px solid #ddd; border-radius: 4px; font-size: 0.9rem;">
+                        <button type="submit" style="padding: 0.7rem; background-color: #1e3a8a; color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; transition: background-color 0.3s;">Subscribe</button>
+                    </form>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-column">
+                <h4>Company</h4>
+                <a href="/">About Us</a>
+                <a href="/">Leadership Team</a>
+                <a href="/">Careers</a>
+                <a href="/">Locations</a>
+            </div>
+            <div class="footer-column">
+                <h4>Solutions</h4>
+                <a href="/">Heavy Equipment</a>
+                <a href="/">Precision Components</a>
+                <a href="/">Steel Fabrication</a>
+                <a href="/">Assembly Services</a>
+            </div>
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <a href="/">Case Studies</a>
+                <a href="/">Technical Specs</a>
+                <a href="/">Quality Certifications</a>
+                <a href="/">Contact Us</a>
+            </div>
+            <div class="footer-column">
+                <h4>Legal</h4>
+                <a href="/">Privacy Policy</a>
+                <a href="/">Terms of Service</a>
+                <a href="/">Accessibility</a>
+                <a href="/">Sitemap</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Premier Manufacturing Solutions. All rights reserved. | ISO 9001:2015 Certified</p>
+        </div>
+    </footer>
+</body>
+</html>
