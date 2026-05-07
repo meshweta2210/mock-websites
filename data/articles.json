@@ -1,0 +1,116 @@
+{
+  "articles": [
+    {
+      "id": 1,
+      "slug": "article-1",
+      "title": "PNC InfraTech Partners with TechCorp Research Institute on 5G Infrastructure",
+      "date": "May 5, 2026",
+      "excerpt": "Strategic research collaboration advances next-generation network capabilities",
+      "challenges": ["rateLimiting", "jsRendering"],
+      "partnerships": [
+        { "type": "research", "text": "research collaboration with TechCorp Research Institute" },
+        { "type": "vendor", "text": "vendor partnerships with industry leaders" },
+        { "type": "manufacturer", "text": "manufacturers involved in this initiative" }
+      ],
+      "relatedArticles": [3, 4, 6]
+    },
+    {
+      "id": 2,
+      "slug": "article-2",
+      "title": "Smart City Infrastructure Deal with Metropolitan Transit Authority",
+      "date": "May 3, 2026",
+      "excerpt": "Multi-million dollar contract to deploy IoT sensors across urban transportation network",
+      "challenges": ["rateLimiting", "imageCaptcha", "jsRendering"],
+      "partnerships": [
+        { "type": "vendor", "text": "vendor partnerships with Siemens and Cisco" },
+        { "type": "manufacturer", "text": "manufacturer partners Bosch and Honeywell" },
+        { "type": "research", "text": "research collaboration with urban planners" }
+      ],
+      "relatedArticles": [3, 5, 7]
+    },
+    {
+      "id": 3,
+      "slug": "article-3",
+      "title": "PNC InfraTech Expands Data Center Operations in Southeast Asia",
+      "date": "April 28, 2026",
+      "excerpt": "New facility in Singapore supports regional cloud infrastructure demands",
+      "challenges": ["rateLimiting"],
+      "partnerships": [
+        { "type": "vendor", "text": "Independent providers" },
+        { "type": "manufacturer", "text": "equipment vendors" },
+        { "type": "research", "text": "Local partnerships" }
+      ],
+      "relatedArticles": [1, 4, 8]
+    },
+    {
+      "id": 4,
+      "slug": "article-4",
+      "title": "Breakthrough in Quantum-Resistant Encryption for Infrastructure Networks",
+      "date": "April 22, 2026",
+      "excerpt": "Patent pending technology protects critical infrastructure from quantum computing threats",
+      "challenges": ["captcha"],
+      "partnerships": [
+        { "type": "vendor", "text": "companies" },
+        { "type": "research", "text": "Beta testing with utilities" },
+        { "type": "manufacturer", "text": "Technology implementation" }
+      ],
+      "relatedArticles": [2, 6, 8]
+    },
+    {
+      "id": 5,
+      "slug": "article-5",
+      "title": "PNC InfraTech Awarded Best Infrastructure Innovation Award",
+      "date": "April 18, 2026",
+      "excerpt": "Recognition for excellence in smart city solutions",
+      "challenges": ["imageCaptcha"],
+      "partnerships": [
+        { "type": "research", "text": "Award committee research" },
+        { "type": "vendor", "text": "municipal infrastructure projects" },
+        { "type": "manufacturer", "text": "infrastructure solutions" }
+      ],
+      "relatedArticles": [1, 3, 7]
+    },
+    {
+      "id": 6,
+      "slug": "article-6",
+      "title": "Infrastructure Cyber Security Report Released by PNC InfraTech Research",
+      "date": "April 12, 2026",
+      "excerpt": "Comprehensive analysis of emerging threats to critical infrastructure systems",
+      "challenges": ["jsRendering"],
+      "partnerships": [
+        { "type": "research", "text": "PNC InfraTech Research" },
+        { "type": "vendor", "text": "Organizations" },
+        { "type": "manufacturer", "text": "pilot programs" }
+      ],
+      "relatedArticles": [2, 4, 8]
+    },
+    {
+      "id": 7,
+      "slug": "article-7",
+      "title": "PNC InfraTech Launches Green Energy Infrastructure Initiative",
+      "date": "April 5, 2026",
+      "excerpt": "Commitment to carbon-neutral infrastructure development by 2030",
+      "challenges": ["rateLimiting"],
+      "partnerships": [
+        { "type": "vendor", "text": "Companies interested in partnering" },
+        { "type": "research", "text": "pilot programs" },
+        { "type": "manufacturer", "text": "solar panel integration" }
+      ],
+      "relatedArticles": [2, 5, 8]
+    },
+    {
+      "id": 8,
+      "slug": "article-8",
+      "title": "Infrastructure Workforce Development Program Reaches 5,000 Graduates",
+      "date": "March 28, 2026",
+      "excerpt": "PNC InfraTech training initiative has educated 5,000 professionals in infrastructure technologies",
+      "challenges": ["captcha"],
+      "partnerships": [
+        { "type": "research", "text": "training centers" },
+        { "type": "vendor", "text": "organizations" },
+        { "type": "manufacturer", "text": "professional development" }
+      ],
+      "relatedArticles": [1, 4, 6]
+    }
+  ]
+}

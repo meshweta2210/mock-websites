@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Press Releases - PNC InfraTech</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <h1><a href="/">PNC InfraTech</a></h1>
+        <p class="tagline">Infrastructure Innovation & Excellence</p>
+      </div>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/press-releases">Press Releases</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="press-releases">
+      <div class="container">
+        <h1>Press Releases</h1>
+        <p class="subtitle">Latest news and announcements from PNC InfraTech</p>
+
+        <div class="articles-grid">
+          <% articles.forEach(article => { %>
+            <article class="article-card">
+              <h3><%= article.title %></h3>
+              <p class="date"><%= article.date %></p>
+              <p class="excerpt"><%= article.excerpt %></p>
+              <a href="/articles/<%= article.slug %>" class="read-more">Read Full Article →</a>
+            </article>
+          <% }); %>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 PNC InfraTech. All rights reserved.</p>
+      <p>Infrastructure Solutions for a Connected World</p>
+    </div>
+  </footer>
+</body>
+</html>

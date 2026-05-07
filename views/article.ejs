@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= article.title %> - PNC InfraTech</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <% if (jsRendered) { %>
+    <script src="/js/dynamic-content.js"></script>
+  <% } %>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <h1><a href="/">PNC InfraTech</a></h1>
+        <p class="tagline">Infrastructure Innovation & Excellence</p>
+      </div>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="/press-releases">Press Releases</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <article class="article-full">
+      <div class="container">
+        <header class="article-header">
+          <h1><%= article.title %></h1>
+          <p class="date"><%= article.date %></p>
+        </header>
+
+        <div class="article-content">
+          <% if (jsRendered) { %>
+            <div id="article-body" class="article-body">
+              Loading article content...
+            </div>
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                fetch('/articles/<%= article.id %>/content')
+                  .then(res => res.json())
+                  .then(data => {
+                    document.getElementById('article-body').innerHTML = data.content;
+                  });
+              });
+            </script>
+          <% } else { %>
+            <div class="article-body">
+              <%- article.content %>
+            </div>
+          <% } %>
+        </div>
+
+        <aside class="article-sidebar">
+          <h3>Related Articles</h3>
+          <ul>
+            <% article.relatedArticles.forEach(relatedId => { %>
+              <% const related = relatedArticles.find(a => a.id === relatedId); %>
+              <% if (related) { %>
+                <li><a href="/articles/<%= related.slug %>"><%= related.title %></a></li>
+              <% } %>
+            <% }); %>
+          </ul>
+        </aside>
+      </div>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 PNC InfraTech. All rights reserved.</p>
+      <p>Infrastructure Solutions for a Connected World</p>
+    </div>
+  </footer>
+</body>
+</html>

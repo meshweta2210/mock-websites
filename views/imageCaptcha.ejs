@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Access - PNC InfraTech</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <h1><a href="/">PNC InfraTech</a></h1>
+        <p class="tagline">Infrastructure Innovation & Excellence</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="captcha-container">
+      <div class="container">
+        <div class="captcha-form">
+          <h2>Image Verification</h2>
+          <p>Please enter the text shown in the image below.</p>
+
+          <% if (error) { %>
+            <div class="error"><%= error %></div>
+          <% } %>
+
+          <form method="POST" action="/articles/<%= articleId %>">
+            <div class="form-group">
+              <div class="captcha-image">
+                <img src="/img/<%= captchaImage %>" alt="CAPTCHA Image">
+              </div>
+              <label>Enter the text from the image:</label>
+              <input type="text" name="imageCaptchaAnswer" required autofocus>
+            </div>
+            <button type="submit" class="btn btn-primary">Verify</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 PNC InfraTech. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
