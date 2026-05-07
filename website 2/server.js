@@ -195,45 +195,13 @@ function renderPressReleasesListHTML(releases, page = 1) {
 
 // Root route (always available)
 app.get('/', (req, res) => {
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Taurus Company - Home</title>
-</head>
-<body>
-  <header>
-    <h1>Welcome to Taurus Company</h1>
-  </header>
-  <main>
-    <p>This is the official website of Taurus Company.</p>
-    ${NAVIGATION_DEPTH >= 1 ? '<nav><a href="/news">News</a></nav>' : ''}
-  </main>
-</body>
-</html>`;
-  res.send(html);
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Level 1: News page (available if NAVIGATION_DEPTH >= 1)
 if (NAVIGATION_DEPTH >= 1) {
   app.get('/news', (req, res) => {
-    const html = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>News - Taurus Company</title>
-</head>
-<body>
-  <header>
-    <h1>Company News</h1>
-  </header>
-  <main>
-    <p>Latest updates and announcements from Taurus Company.</p>
-    ${NAVIGATION_DEPTH >= 2 ? '<nav><a href="/press-releases">Press Releases</a></nav>' : ''}
-  </main>
-</body>
-</html>`;
-    res.send(html);
+    res.sendFile(path.join(__dirname, 'news.html'));
   });
 }
 
