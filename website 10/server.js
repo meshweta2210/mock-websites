@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const { getPressReleases, getPressReleaseById } = require('./press-release-data');
 const { assignComplexityFeatures, getRandomNavigationDepth } = require('../lib/complexity-config');
 
@@ -9,6 +10,7 @@ const COMPANY_ID = process.env.COMPANY_ID || 'taurus';
 const NAVIGATION_DEPTH = parseInt(process.env.NAVIGATION_DEPTH) || getRandomNavigationDepth();
 const HAS_RATE_LIMITING = process.env.HAS_RATE_LIMITING === 'true';
 const RATE_LIMIT_THRESHOLD = parseInt(process.env.RATE_LIMIT_THRESHOLD) || 20;
+const RATE_LIMIT_PROB = parseFloat(process.env.RATE_LIMIT_PROB) || 0.2;
 
 // Load complexity features using the assigned features function
 const assignedFeatures = assignComplexityFeatures(COMPANY_ID);
@@ -65,9 +67,22 @@ function rateLimitMiddleware(req, res, next) {
   next();
 }
 
+// Middleware for random rate limiting on PR articles
+function prArticleRandomRateLimitMiddleware(req, res, next) {
+  if (!req.path.match(/^\/pr-\d+\.html$/)) {
+    return next();
+  }
+  if (Math.random() < RATE_LIMIT_PROB) {
+    res.set('Retry-After', '60');
+    return res.status(429).send('<h1>429 Too Many Requests</h1><p>Retry after 60s.</p>');
+  }
+  next();
+}
+
 // Middleware
 app.use(rateLimitMiddleware);
-app.use(express.static('public'));
+app.use(prArticleRandomRateLimitMiddleware);
+app.use(express.static(__dirname));
 
 // Helper function to render press release HTML
 function renderPressReleaseHTML(release) {
@@ -180,55 +195,20 @@ function renderPressReleasesListHTML(releases, page = 1) {
 
 // Root route (always available)
 app.get('/', (req, res) => {
-  const html = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Taurus Company - Home</title>
-</head>
-<body>
-  <header>
-    <h1>Welcome to Taurus Company</h1>
-  </header>
-  <main>
-    <p>This is the official website of Taurus Company.</p>
-    ${NAVIGATION_DEPTH >= 1 ? '<nav><a href="/news">News</a></nav>' : ''}
-  </main>
-</body>
-</html>`;
-  res.send(html);
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Level 1: News page (available if NAVIGATION_DEPTH >= 1)
 if (NAVIGATION_DEPTH >= 1) {
   app.get('/news', (req, res) => {
-    const html = `<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>News - Taurus Company</title>
-</head>
-<body>
-  <header>
-    <h1>Company News</h1>
-  </header>
-  <main>
-    <p>Latest updates and announcements from Taurus Company.</p>
-    ${NAVIGATION_DEPTH >= 2 ? '<nav><a href="/press-releases">Press Releases</a></nav>' : ''}
-  </main>
-</body>
-</html>`;
-    res.send(html);
+    res.sendFile(path.join(__dirname, 'news.html'));
   });
 }
 
 // Level 2: Press releases list (available if NAVIGATION_DEPTH >= 2)
 if (NAVIGATION_DEPTH >= 2) {
   app.get('/press-releases', (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const releases = getPressReleases();
-    const html = renderPressReleasesListHTML(releases, page);
-    res.send(html);
+    res.sendFile(path.join(__dirname, 'press-releases.html'));
   });
 }
 
@@ -260,6 +240,7 @@ app.get('/health', (req, res) => {
     status: 'ok',
     company: COMPANY_ID,
     navigationDepth: NAVIGATION_DEPTH,
+    rateLimitProb: RATE_LIMIT_PROB,
     features: complexityConfig,
     timestamp: new Date().toISOString()
   });
@@ -286,6 +267,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
+  const rateLimitPercentage = Math.round(RATE_LIMIT_PROB * 100);
   console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║                                                            ║
@@ -303,6 +285,7 @@ ${NAVIGATION_DEPTH >= 1 ? '║  - News: /news\n' : ''}║  - Press Releases: /pr
 ║                                                            ║
 ║  Features:                                                 ║
 ║  - Rate Limiting: ${complexityConfig.rateLimiting ? 'enabled' : 'disabled'}                              ║
+║  - PR Rate Limiting (random): ${rateLimitPercentage}%                            ║
 ║  - Dynamic Generation: ${complexityConfig.dynamicGeneration ? 'enabled' : 'disabled'}                    ║
 ║  - Inconsistent HTML: ${complexityConfig.inconsistentHtml ? 'enabled' : 'disabled'}                     ║
 ║  - Pagination: ${complexityConfig.pagination ? 'enabled' : 'disabled'}                                ║
